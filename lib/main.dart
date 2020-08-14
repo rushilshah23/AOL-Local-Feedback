@@ -33,6 +33,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   TextEditingController _feedback = new TextEditingController();
   TextEditingController _suggestions = new TextEditingController();
   TextEditingController _ratings = new TextEditingController();
+  TextEditingController _address = new TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -50,6 +51,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
       'name': _name.text,
       'contactNumber': _contactNumber.text,
       'email': _email.text,
+      'address': _address.text,
       'feedback': _feedback.text,
       'suggestions': _suggestions.text,
     });
@@ -64,9 +66,23 @@ class _LocalFeedbackState extends State<LocalFeedback> {
     _ratings.clear();
   }
 
-  String textValidator(value) {
+  String nameValidator(value) {
     if (value.isEmpty) {
       return 'Please enter a valid Name';
+    } else
+      return null;
+  }
+
+  String addressValidator(value) {
+    if (value.isEmpty) {
+      return 'Please enter a valid Address';
+    } else
+      return null;
+  }
+
+  String feedbackValidator(value) {
+    if (value.isEmpty) {
+      return 'Please give your Feedback!';
     } else
       return null;
   }
@@ -107,28 +123,26 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   //     return null;
   // }
 
-  TextFormField fields({
-    String decorationText,
-    TextEditingController controllername,
-    Function validateFunction,
-    List<TextInputFormatter> numFormatter,
-    int maxlines,
-    int maxlen,
-    TextInputType keyboard,
-  }) {
+  TextFormField fields(
+      {String decorationText,
+      TextEditingController controllername,
+      Function validateFunction,
+      List<TextInputFormatter> numFormatter,
+      int maxlines,
+      int maxlen,
+      TextInputType keyboard,
+      String compulsory}) {
     return TextFormField(
       maxLines: maxlines,
       maxLength: maxlen,
-      // key: _formKey,
       controller: controllername,
       decoration: InputDecoration(
-          labelText: decorationText,
+          labelText: compulsory + decorationText,
           border: OutlineInputBorder(),
           hintText: 'Enter your $decorationText'),
       cursorWidth: 2,
       inputFormatters: numFormatter,
       keyboardType: keyboard,
-
       validator: validateFunction,
     );
   }
@@ -141,90 +155,111 @@ class _LocalFeedbackState extends State<LocalFeedback> {
         centerTitle: true,
       ),
       body: Container(
-        margin: EdgeInsets.all(32),
-        child: ListView(
-          children: <Widget>[
-            Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    fields(
-                        decorationText: "Name",
-                        controllername: _name,
-                        validateFunction: textValidator),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    fields(
+        margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: <Widget>[
+              Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                          decorationText: "Name",
+                          controllername: _name,
+                          validateFunction: nameValidator,
+                          compulsory: "*"),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
                         keyboard: TextInputType.number,
                         decorationText: "Contact Number",
                         controllername: _contactNumber,
                         validateFunction: contactValidator,
                         numFormatter: [
                           WhitelistingTextInputFormatter.digitsOnly
-                        ]),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    fields(
-                        decorationText: "Email ID",
-                        controllername: _email,
-                        validateFunction: emailValidator),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    fields(
-                      decorationText: "Feedback",
-                      controllername: _feedback,
-                      validateFunction: textValidator,
-                      maxlen: 300,
-                      maxlines: 5,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    fields(
-                      controllername: _suggestions,
-                      validateFunction: textValidator,
-                      decorationText: "Suggestions",
-                      maxlen: 300,
-                      maxlines: 5,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Builder(
-                      builder: (BuildContext context) => RaisedButton(
-                          child: Text('Submit'),
-                          color: Colors.blue,
-                          colorBrightness: Brightness.light,
-                          onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              try {
-                                submitLocalFeedback();
+                        ],
+                        compulsory: "*",
+                        maxlen: 10,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                          decorationText: "Email ID",
+                          controllername: _email,
+                          validateFunction: emailValidator,
+                          compulsory: "*"),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                        decorationText: "Address",
+                        controllername: _address,
+                        validateFunction: addressValidator,
+                        compulsory: "*",
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                          decorationText: "Feedback",
+                          controllername: _feedback,
+                          validateFunction: feedbackValidator,
+                          maxlen: 300,
+                          maxlines: 5,
+                          compulsory: "*"),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                          controllername: _suggestions,
+                          // validateFunction: textValidator,
+                          decorationText: "Suggestions",
+                          maxlen: 300,
+                          maxlines: 5,
+                          compulsory: ""),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Builder(
+                        builder: (BuildContext context) => RaisedButton(
+                            child: Text('Submit'),
+                            color: Colors.blue,
+                            colorBrightness: Brightness.light,
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                try {
+                                  submitLocalFeedback();
 
-                                _name.clear();
-                                _contactNumber.clear();
-                                _email.clear();
-                                _feedback.clear();
-                                _suggestions.clear();
-                                _ratings.clear();
+                                  _name.clear();
+                                  _contactNumber.clear();
+                                  _email.clear();
+                                  _feedback.clear();
+                                  _suggestions.clear();
+                                  _ratings.clear();
+                                  _address.clear();
 
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text("Feedback recorded")));
-                              } catch (error) {
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text("Details Validated")));
-                                return 'OOPS there was an error!';
-                              }
-                              return null;
-                            } else
-                              return 'Enter the fields properly';
-                          }),
-                    )
-                  ],
-                ))
-          ],
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Feedback recorded")));
+                                } catch (error) {
+                                  Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text("Details Validated")));
+                                  return 'OOPS there was an error!';
+                                }
+                                return null;
+                              } else
+                                return 'Enter the fields properly';
+                            }),
+                      )
+                    ],
+                  ))
+            ],
+          ),
         ),
       ),
     );
