@@ -64,6 +64,75 @@ class _LocalFeedbackState extends State<LocalFeedback> {
     _ratings.clear();
   }
 
+  Future<void> _showMyDialog() async {
+    return await showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          title: Text(
+            'ThankYou for the feedback !',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 6
+                ..color = Colors.blue[900],
+              shadows: [
+                Shadow(
+                  color: Colors.blue,
+                  blurRadius: 10.0,
+                  offset: Offset(4.0, 4.0),
+                ),
+                Shadow(
+                  color: Colors.red,
+                  blurRadius: 10.0,
+                  offset: Offset(-4.0, 4.0),
+                ),
+              ],
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              mainAxis: Axis.vertical,
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    'Your Response has been submitted.',
+                    style: TextStyle(
+                        color: Colors.black87, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0))),
+              hoverColor: Colors.red[400],
+              color: Colors.black,
+              child: Text(
+                'OK',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+          backgroundColor: Colors.blue[400],
+          elevation: 58.0,
+          // shape: CircleBorder(),
+        );
+      },
+    );
+  }
+
   String textValidator(value) {
     if (value.isEmpty) {
       return 'Please enter a valid Name';
@@ -209,9 +278,11 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                 _feedback.clear();
                                 _suggestions.clear();
                                 _ratings.clear();
+                                
+                                __showMyDialog()
 
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text("Feedback recorded")));
+//                                 Scaffold.of(context).showSnackBar(SnackBar(
+//                                     content: Text("Feedback recorded")));
                               } catch (error) {
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text("Details Validated")));
