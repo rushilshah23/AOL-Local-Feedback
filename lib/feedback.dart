@@ -318,7 +318,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                 } else {
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text(
-                                        "PLease fill the details properly"),
+                                        "Please fill the details properly"),
                                     duration: Duration(seconds: 1),
                                   ));
                                   return 'Enter the fields properly';
