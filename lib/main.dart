@@ -1,13 +1,35 @@
+import 'package:AOL_localfeedback/translationPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './feedback.dart';
+import 'package:translator/translator.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool setLanguage;
+  void initState() {
+    getLanguageInfo();
+    super.initState();
+  }
+
+  Future<bool> getLanguageInfo() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      setLanguage = sharedPreferences.getBool('setLanguage' ?? false);
+    });
+
+    return setLanguage;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +38,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Home Page'),
+      home: (setLanguage == true)
+          ? MyHomePage(
+              title: 'HomePage',
+            )
+          : TranslationSelection(),
+      // home: MyHomePage(title: 'Home Page'),
     );
   }
 }
@@ -31,11 +58,59 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String _language;
+  GoogleTranslator translator = GoogleTranslator();
+
+  String text = "We serve society by strengthening the individual";
+
+  void initState() {
+    loadLanguage().then((value) {
+      print(_language);
+    });
+    translate(text);
+    // print(_language);
+    super.initState();
+  }
+
+  Future<String> loadLanguage() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() {
+      _language = sharedPreferences.getString('language');
+    });
+
+    return _language;
+  }
+
+  void translate(String text) {
+    translator.translate(text, to: _language).then((output) {
+      setState(() {
+        text = output.toString();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        centerTitle: true,
+        actions: [
+          Container(
+            color: Colors.transparent,
+            child: RaisedButton.icon(
+                color: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TranslationSelection()));
+                },
+                icon: Icon(Icons.language),
+                label: Text('Languages')),
+          )
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(8),
@@ -65,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                'We serve society by strengthening the individual',
+                text,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,

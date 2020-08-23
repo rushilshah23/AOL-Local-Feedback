@@ -28,7 +28,8 @@ dependencies:
   firebase_core: ^0.4.5
   time_formatter: ^1.0.0+5
   intl: ^0.16.1
-  
+  translator: ^0.1.5
+  shared_preferences: ^0.5.10
   
 
 
