@@ -2,6 +2,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class Feedback extends StatefulWidget {
   @override
@@ -51,6 +52,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
       'address': _address.text,
       'feedback': _feedback.text,
       'suggestions': _suggestions.text,
+      'timestamp': new DateFormat.yMd().add_jm().format(new DateTime.now()),
     });
   }
 
