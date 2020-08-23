@@ -1,265 +1,330 @@
-import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import './feedback.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: Theme.of(context),
-        title: "Local Feedback",
-        home: Builder(builder: (BuildContext context) => LocalFeedback()));
-  }
-}
-
-class LocalFeedback extends StatefulWidget {
-  @override
-  _LocalFeedbackState createState() => _LocalFeedbackState();
-}
-
-class _LocalFeedbackState extends State<LocalFeedback> {
-  TextEditingController _name = new TextEditingController();
-  TextEditingController _contactNumber = new TextEditingController();
-  TextEditingController _email = new TextEditingController();
-  TextEditingController _feedback = new TextEditingController();
-  TextEditingController _suggestions = new TextEditingController();
-  TextEditingController _ratings = new TextEditingController();
-  TextEditingController _address = new TextEditingController();
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  @override
-  void initState() {
-    super.initState();
-    // clearControllers();
-  }
-
-  void submitLocalFeedback() {
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.instance;
-    DatabaseReference databaseReference = firebaseDatabase.reference();
-
-    databaseReference.child("localFeedback").push().set({
-      'name': _name.text,
-      'contactNumber': _contactNumber.text,
-      'email': _email.text,
-      'address': _address.text,
-      'feedback': _feedback.text,
-      'suggestions': _suggestions.text,
-    });
-  }
-
-  void clearControllers() {
-    _name.clear();
-    _contactNumber.clear();
-    _email.clear();
-    _feedback.clear();
-    _suggestions.clear();
-    _ratings.clear();
-  }
-
-  String nameValidator(value) {
-    if (value.isEmpty) {
-      return 'Please enter a valid Name';
-    } else
-      return null;
-  }
-
-  String addressValidator(value) {
-    if (value.isEmpty) {
-      return 'Please enter a valid Address';
-    } else
-      return null;
-  }
-
-  String feedbackValidator(value) {
-    if (value.isEmpty) {
-      return 'Please give your Feedback!';
-    } else
-      return null;
-  }
-
-  String emailValidator(value) {
-    if (value.isEmpty) {
-      return 'Please enter a Email ID';
-    } else if (value.toString().contains('@') &&
-        value.toString().contains('.')) {
-      return null;
-    } else
-      return 'Please enter a valid Email ID';
-  }
-
-  String contactValidator(value) {
-    if (value.isEmpty) {
-      return 'Please enter a valid contact number';
-    }
-    final n = num.tryParse(value);
-    if (n == null) {
-      return 'Enter a valid contact number';
-    } else if (n > 9999999999 || n < 1000000000) {
-      return 'Enter a valid 10 digit number';
-    } else
-      return null;
-  }
-
-  // String countryCodeValidator(value) {
-  //   if (value.isEmpty) {
-  //     return 'Please enter a valid contact number';
-  //   }
-  //   final n = num.tryParse(value);
-  //   if (n == null) {
-  //     return 'Enter a valid Country code';
-  //   } else if (n > 999999999 || n < 1000000000) {
-  //     return 'Enter a valid 10 digit number';
-  //   } else
-  //     return null;
-  // }
-
-  TextFormField fields(
-      {String decorationText,
-      TextEditingController controllername,
-      Function validateFunction,
-      List<TextInputFormatter> numFormatter,
-      int maxlines,
-      int maxlen,
-      TextInputType keyboard,
-      String compulsory}) {
-    return TextFormField(
-      maxLines: maxlines,
-      maxLength: maxlen,
-      controller: controllername,
-      decoration: InputDecoration(
-          labelText: compulsory + decorationText,
-          border: OutlineInputBorder(),
-          hintText: 'Enter your $decorationText'),
-      cursorWidth: 2,
-      inputFormatters: numFormatter,
-      keyboardType: keyboard,
-      validator: validateFunction,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: MyHomePage(title: 'Home Page'),
     );
   }
+}
 
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Local Feedback"),
-        centerTitle: true,
+        title: Text(widget.title),
       ),
       body: Container(
-        margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: <Widget>[
-              Form(
-                  key: _formKey,
-                  child: Column(
+        padding: EdgeInsets.all(8),
+        child: ListView(
+          children: <Widget>[
+            Container(
+              child: Image.asset('assets/logo.jpg'),
+              height: 120,
+              width: 120,
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "ABOUT US",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Colors.blueGrey),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                'We serve society by strengthening the individual',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Operating in 156 countries, The Art of Living is a non-profit, educational and humanitarian organization founded in 1981 by the world-renowned humanitarian and spiritual teacher - Gurudev Sri Sri Ravi Shankar. All our programs are guided by Gurudev’s philosophy: “Unless we have a stress-free mind and a violence-free society, we cannot achieve world peace.”',
+                style: TextStyle(fontSize: 18, wordSpacing: 2),
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                'The Art of Living community is diverse and attracts people from all walks of life.',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/map.jpg'), fit: BoxFit.cover),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      child: Row(
                     children: <Widget>[
-                      SizedBox(
-                        height: 20,
-                      ),
-                      fields(
-                          decorationText: "Name",
-                          controllername: _name,
-                          validateFunction: nameValidator,
-                          compulsory: "*"),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      fields(
-                        keyboard: TextInputType.number,
-                        decorationText: "Contact Number",
-                        controllername: _contactNumber,
-                        validateFunction: contactValidator,
-                        numFormatter: [
-                          WhitelistingTextInputFormatter.digitsOnly
-                        ],
-                        compulsory: "*",
-                        maxlen: 10,
+                      Icon(
+                        Icons.favorite_border,
+                        size: 80,
+                        color: Colors.white,
                       ),
                       SizedBox(
-                        height: 20,
+                        width: 15,
                       ),
-                      fields(
-                          decorationText: "Email ID",
-                          controllername: _email,
-                          validateFunction: emailValidator,
-                          compulsory: "*"),
-                      SizedBox(
-                        height: 20,
+                      Text(
+                        '39\nyears of service',
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
-                      fields(
-                        decorationText: "Address",
-                        controllername: _address,
-                        validateFunction: addressValidator,
-                        compulsory: "*",
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      fields(
-                          decorationText: "Feedback",
-                          controllername: _feedback,
-                          validateFunction: feedbackValidator,
-                          maxlen: 300,
-                          maxlines: 5,
-                          compulsory: "*"),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      fields(
-                          controllername: _suggestions,
-                          // validateFunction: textValidator,
-                          decorationText: "Suggestions",
-                          maxlen: 300,
-                          maxlines: 5,
-                          compulsory: ""),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Builder(
-                        builder: (BuildContext context) => RaisedButton(
-                            child: Text('Submit'),
-                            color: Colors.blue,
-                            colorBrightness: Brightness.light,
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                try {
-                                  submitLocalFeedback();
-
-                                  _name.clear();
-                                  _contactNumber.clear();
-                                  _email.clear();
-                                  _feedback.clear();
-                                  _suggestions.clear();
-                                  _ratings.clear();
-                                  _address.clear();
-
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Feedback recorded")));
-                                } catch (error) {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text("Details Validated")));
-                                  return 'OOPS there was an error!';
-                                }
-                                return null;
-                              } else
-                                return 'Enter the fields properly';
-                            }),
-                      )
                     ],
-                  ))
-            ],
-          ),
+                  )),
+                  Divider(
+                    height: 1,
+                    color: Colors.white,
+                  ),
+                  Container(
+                      child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.language,
+                        size: 80,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        '156\ncountries where we make\na difference',
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ],
+                  )),
+                  Divider(
+                    height: 1,
+                    color: Colors.white,
+                  ),
+                  Container(
+                      child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.location_on,
+                        size: 80,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        '10,000+\ncenters worldwide with \nweekly follow-up sessions',
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ],
+                  )),
+                  Divider(
+                    height: 1,
+                    color: Colors.white,
+                  ),
+                  Container(
+                      child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.people,
+                        size: 80,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        '450 million\nlives touched',
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ],
+                  )),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Center(
+              child: Text(
+                "Founder",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
+            ),
+            Container(
+              height: 220,
+              width: 300,
+              child: Image.asset('assets/photo.jpg'),
+            ),
+            Center(
+              child: Text(
+                "Sri Sri Ravi Shankar Ji",
+                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 22),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Text(
+                'Gurudev Sri Sri Ravi Shankar has united people of different races, traditions, economic and social status, and nationalities.This community, spanning 156 countries, has created a one-world spiritual family.',
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Center(
+              child: Text(
+                'Gurudev’s message is simple: “Love and wisdom can prevail over hatred and violence.” This message is not just a slogan, but through The Art of Living has been and continues to be translated into action and results.',
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              color: Colors.black,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Contact Us',
+                      style: TextStyle(color: Colors.white, fontSize: 40),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'India Office',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Phone: +91 8067612345',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Fax: +91 8028432833',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Email: secretariat@artofliving.org',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Address: Office of gurudev Sri Sri Ravi Shankar,The Art of living International centre',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+              child: RaisedButton.icon(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  elevation: 2,
+                  color: Colors.blue,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LocalFeedback()));
+                  },
+                  icon: Icon(Icons.feedback),
+                  label: Text('Feedback')),
+            )
+          ],
         ),
       ),
     );
