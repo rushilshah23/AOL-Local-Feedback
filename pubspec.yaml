@@ -30,6 +30,7 @@ dependencies:
   intl: ^0.16.1
   translator: ^0.1.5
   shared_preferences: ^0.5.10
+  flutter_phoenix: ^0.1.0
   
 
 

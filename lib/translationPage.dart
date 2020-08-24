@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import './main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -68,9 +69,9 @@ class _TranslationSelectionState extends State<TranslationSelection> {
                               await SharedPreferences.getInstance();
 
                           if (selected == 1) {
-                            // setState(() {
-                            sharedPreferences.setString('language', 'en');
-                            // });
+                            setState(() {
+                              sharedPreferences.setString('language', 'en');
+                            });
                           } else if (selected == 2) {
                             setState(() {
                               sharedPreferences.setString('language', 'hi');
@@ -87,12 +88,14 @@ class _TranslationSelectionState extends State<TranslationSelection> {
                           // Scaffold.of(context).showSnackBar(
                           //     SnackBar(content: Text("Language setted")));
 
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyHomePage(
-                                        title: 'HomePage1',
-                                      )));
+                          // Navigator.pushReplacement(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => MyHomePage(
+                          //               title: 'HomePage1',
+                          //             )),);
+
+                          Phoenix.rebirth(context);
                         },
                         icon: Icon(Icons.language),
                         label: Text("Continue"));

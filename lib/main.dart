@@ -1,12 +1,15 @@
 import 'package:AOL_localfeedback/translationPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './feedback.dart';
 import 'package:translator/translator.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Phoenix(
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -59,17 +62,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _language;
-  GoogleTranslator translator = GoogleTranslator();
+  GoogleTranslator translator = new GoogleTranslator();
 
   String text = "We serve society by strengthening the individual";
 
   void initState() {
-    loadLanguage().then((value) {
-      print(_language);
-    });
-    translate(text);
-    // print(_language);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadLanguage().then((value) {
+        print(_language);
+        translate(text);
+      });
+    });
   }
 
   Future<String> loadLanguage() async {
@@ -81,8 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return _language;
   }
 
-  void translate(String text) {
-    translator.translate(text, to: _language).then((output) {
+  Future<void> translate(String text) async {
+    await translator.translate(text, to: _language).then((output) {
+      print(output);
       setState(() {
         text = output.toString();
       });
@@ -97,9 +102,8 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         actions: [
           Container(
-            color: Colors.transparent,
             child: RaisedButton.icon(
-                color: Colors.transparent,
+                color: Colors.blue,
                 highlightColor: Colors.transparent,
                 onPressed: () {
                   Navigator.push(
