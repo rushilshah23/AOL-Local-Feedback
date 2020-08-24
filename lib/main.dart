@@ -71,7 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadLanguage().then((value) {
         print(_language);
-        translate(text);
+        translate(text).then((_) {
+          setState(() {});
+        });
       });
     });
   }

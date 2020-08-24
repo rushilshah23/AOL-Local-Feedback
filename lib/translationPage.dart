@@ -13,7 +13,7 @@ class _TranslationSelectionState extends State<TranslationSelection> {
 
   @override
   void initState() {
-    selected = 1;
+    selected = 0;
     super.initState();
   }
 
@@ -35,6 +35,10 @@ class _TranslationSelectionState extends State<TranslationSelection> {
         child: Center(
           child: Column(
             children: [
+              Text("Defualt language is English"),
+              SizedBox(
+                height: 30,
+              ),
               RadioListTile(
                   title: Text("English"),
                   value: 1,
