@@ -141,7 +141,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   String nameValidator(value) {
     if (value.isEmpty) {
       return 'Please enter a valid Name';
-    } else
+    } else 
       return null;
   }
 

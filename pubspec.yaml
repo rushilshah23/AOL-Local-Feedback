@@ -28,6 +28,7 @@ dependencies:
   firebase_core: ^0.4.5
   time_formatter: ^1.0.0+5
   intl: ^0.16.1
+  google_maps_flutter: ^0.5.30
   
   
 
