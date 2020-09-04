@@ -32,6 +32,11 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   TextEditingController _suggestions = new TextEditingController();
   TextEditingController _ratings = new TextEditingController();
   TextEditingController _address = new TextEditingController();
+  TextEditingController _groundWater1 = new TextEditingController();
+  TextEditingController _groundWater2 = new TextEditingController();
+  TextEditingController _crop1 = new TextEditingController();
+
+  TextEditingController _crop2 = new TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -52,6 +57,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
       'address': _address.text,
       'feedback': _feedback.text,
       'suggestions': _suggestions.text,
+      'ground water before': _groundWater1.text,
+      'ground water after': _groundWater2.text,
+      'crop production before': _crop1.text,
+      'crop production after': _crop2.text,
       'timestamp': new DateFormat.yMd().add_jm().format(new DateTime.now()),
     });
   }
@@ -141,7 +150,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   String nameValidator(value) {
     if (value.isEmpty) {
       return 'Please enter a valid Name';
-    } else 
+    } else
       return null;
   }
 
@@ -196,7 +205,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
       maxLength: maxlen,
       controller: controllername,
       decoration: InputDecoration(
-          labelText: compulsory + decorationText,
+          labelText: decorationText + compulsory,
           border: OutlineInputBorder(),
           hintText: 'Enter your $decorationText'),
       cursorWidth: 2,
@@ -266,6 +275,46 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         height: 20,
                       ),
                       fields(
+                          decorationText: "Ground water before",
+                          controllername: _groundWater1,
+                          // validateFunction: feedbackValidator,
+                          maxlen: 150,
+                          maxlines: 3,
+                          compulsory: ""),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                          decorationText: "Ground water after",
+                          controllername: _groundWater2,
+                          // validateFunction: feedbackValidator,
+                          maxlen: 150,
+                          maxlines: 3,
+                          compulsory: ""),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                          decorationText: "Crop production before",
+                          controllername: _crop1,
+                          // validateFunction: feedbackValidator,
+                          maxlen: 150,
+                          maxlines: 2,
+                          compulsory: ""),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                          decorationText: "Crop production after",
+                          controllername: _crop2,
+                          // validateFunction: feedbackValidator,
+                          maxlen: 150,
+                          maxlines: 2,
+                          compulsory: ""),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
                           decorationText: "Feedback",
                           controllername: _feedback,
                           validateFunction: feedbackValidator,
@@ -287,45 +336,59 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                       ),
                       Builder(
                         builder: (BuildContext context) => Container(
-                          child: RaisedButton.icon(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              icon: Icon(Icons.comment),
-                              label: Text('Submit'),
-                              color: Colors.blue,
-                              colorBrightness: Brightness.light,
-                              onPressed: () {
-                                if (_formKey.currentState.validate()) {
-                                  try {
-                                    submitLocalFeedback();
+                          child: Container(
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                  colors: [
+                                    const Color(0xFFFF8F00),
+                                    const Color(0xFFFFc107)
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(12.0)),
+                            child: RaisedButton.icon(
+                                color: Colors.transparent,
+                                icon: Icon(Icons.comment),
+                                label: Text('Submit'),
+                                onPressed: () {
+                                  if (_formKey.currentState.validate()) {
+                                    try {
+                                      submitLocalFeedback();
 
-                                    _name.clear();
-                                    _contactNumber.clear();
-                                    _email.clear();
-                                    _feedback.clear();
-                                    _suggestions.clear();
-                                    _ratings.clear();
-                                    _address.clear();
-                                    _showMyDialog();
+                                      _name.clear();
+                                      _contactNumber.clear();
+                                      _email.clear();
+                                      _feedback.clear();
+                                      _suggestions.clear();
+                                      _ratings.clear();
+                                      _address.clear();
+                                      _showMyDialog();
+                                      _groundWater1.clear();
+                                      _groundWater2.clear();
+                                      _crop1.clear();
+                                      _crop2.clear();
 
-                                    // Scaffold.of(context).showSnackBar(SnackBar(
-                                    //     content: Text("Feedback recorded")));
-                                  } catch (error) {
+                                      // Scaffold.of(context).showSnackBar(SnackBar(
+                                      //     content: Text("Feedback recorded")));
+                                    } catch (error) {
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  "Something went wrong")));
+                                      return 'OOPS there was an error!';
+                                    }
+                                    return null;
+                                  } else {
                                     Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text("Something went wrong")));
-                                    return 'OOPS there was an error!';
+                                      content: Text(
+                                          "Please fill the details properly"),
+                                      duration: Duration(seconds: 1),
+                                    ));
+                                    return 'Enter the fields properly';
                                   }
-                                  return null;
-                                } else {
-                                  Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text(
-                                        "Please fill the details properly"),
-                                    duration: Duration(seconds: 1),
-                                  ));
-                                  return 'Enter the fields properly';
-                                }
-                              }),
+                                }),
+                          ),
                         ),
                       )
                     ],
