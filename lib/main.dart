@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({this.title});
 
   final String title;
 
@@ -71,9 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadLanguage().then((value) {
         print(_language);
-        translate(text).then((_) {
-          setState(() {});
-        });
+        // translate().then((_) {
+        //   setState(() {});
+        // });
       });
     });
   }
@@ -87,9 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return _language;
   }
 
-  Future<void> translate(String text) async {
+  Future<void> translate() async {
     await translator.translate(text, to: _language).then((output) {
-      print(output);
+      print(output.toString());
       setState(() {
         text = output.toString();
       });
@@ -404,6 +404,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   icon: Icon(Icons.feedback),
                   label: Text('Feedback')),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+              child: RaisedButton.icon(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  elevation: 2,
+                  color: Colors.blue,
+                  onPressed: () {
+                    translate();
+                  },
+                  icon: Icon(Icons.feedback),
+                  label: Text('translate')),
             )
           ],
         ),
