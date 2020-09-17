@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner:false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.amber,
@@ -38,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
@@ -55,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         context,
       ),
       body: Container(
+        height: _screenSize.height * 0.9,
         padding: EdgeInsets.all(8),
         child: ListView(
           children: <Widget>[
@@ -115,6 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 25,
             ),
             Container(
+              width: _screenSize. width * 0.4,
               decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/map.jpg'), fit: BoxFit.cover),
@@ -159,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text(
                         '156\ncountries where we make\na difference',
                         style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
@@ -183,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text(
                         '10,000+\ncenters worldwide with \nweekly follow-up sessions',
                         style: TextStyle(
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),

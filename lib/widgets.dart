@@ -1,6 +1,9 @@
+import 'package:AOL_localfeedback/FormPage.dart';
+import 'package:AOL_localfeedback/ProjectPage.dart';
 import 'package:AOL_localfeedback/feedback.dart';
 import 'package:AOL_localfeedback/main.dart';
 import 'package:flutter/material.dart';
+import 'package:AOL_localfeedback/ApiRazorPay.dart';
 
 Drawer myDrawer(BuildContext context) {
   return Drawer(
@@ -50,23 +53,20 @@ Drawer myDrawer(BuildContext context) {
         ListTile(
             title: Text('Project'),
             onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MyHomePage(
-                            title: "Home Page",
-                          )));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProjectPage()));
             }),
         ListTile(
           title: Text('Donation'),
           onTap: () {
-            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ApiRazorPay()));
           },
         ),
         ListTile(
             title: Text('Feedback'),
             onTap: () {
-              Navigator.pushReplacement(context,
+              Navigator.push(context,
                   MaterialPageRoute(builder: (context) => LocalFeedback()));
             }
 
