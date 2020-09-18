@@ -1,5 +1,8 @@
+import 'package:AOL_localfeedback/homePage.dart';
+import 'package:AOL_localfeedback/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,6 +28,7 @@ class _TranslationSelectionState extends State<TranslationSelection> {
 
   @override
   Widget build(BuildContext context) {
+    var setLang = Provider.of<Language>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Choose your language'),
@@ -68,41 +72,55 @@ class _TranslationSelectionState extends State<TranslationSelection> {
                 child: Builder(
                   builder: (BuildContext context) {
                     return RaisedButton.icon(
-                        onPressed: () async {
-                          SharedPreferences sharedPreferences =
-                              await SharedPreferences.getInstance();
+                      onPressed: () async {
+                        SharedPreferences sharedPreferences =
+                            await SharedPreferences.getInstance();
 
-                          if (selected == 1) {
-                            setState(() {
-                              sharedPreferences.setString('language', 'en');
-                            });
-                          } else if (selected == 2) {
-                            setState(() {
-                              sharedPreferences.setString('language', 'hi');
-                            });
-                          } else if (selected == 3) {
-                            setState(() {
-                              sharedPreferences.setString('language', 'mr');
-                            });
-                          }
+                        if (selected == 1) {
                           setState(() {
-                            sharedPreferences.setBool('setLanguage', true);
+                            setLang.setLang('en');
+                            print(setLang.checkLangSet());
+                            sharedPreferences.setString('language', 'en');
                           });
+                        } else if (selected == 2) {
+                          setState(() {
+                            setLang.setLang('hi');
+                            print(setLang.checkLangSet());
+                            sharedPreferences.setString('language', 'hi');
+                          });
+                        } else if (selected == 3) {
+                          setState(() {
+                            setLang.setLang('mr');
+                            print(setLang.checkLangSet());
+                            sharedPreferences.setString('language', 'mr');
+                          });
+                        }
+                        setState(() {
+                          sharedPreferences.setBool('setLanguage', true);
+                        });
 
-                          // Scaffold.of(context).showSnackBar(
-                          //     SnackBar(content: Text("Language setted")));
+                        // Scaffold.of(context).showSnackBar(
+                        //     SnackBar(content: Text("Language setted")));
 
-                          // Navigator.pushReplacement(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => MyHomePage(
-                          //               title: 'HomePage1',
-                          //             )),);
+                        // Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => MyHomePage(
+                        //               title: 'HomePage1',
+                        //             )),);
 
-                          Phoenix.rebirth(context);
-                        },
-                        icon: Icon(Icons.language),
-                        label: Text("Continue"));
+                        // Phoenix.rebirth(context);
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyHomePage(
+                                      title: 'Home Page',
+                                    )));
+                      },
+                      icon: Icon(Icons.language),
+                      label: Text("Continue"),
+                    );
                   },
                 ),
               )
