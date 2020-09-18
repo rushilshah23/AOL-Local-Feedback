@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './feedback.dart';
-import 'package:translator/translator.dart';
+import 'package:AOL_localfeedback/widgets.dart';
 
 void main() {
   runApp(Phoenix(
@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.amber,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: (setLanguage == true)
@@ -52,71 +52,52 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({this.title});
-
   final String title;
+  // MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({this.title});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _language;
-  GoogleTranslator translator = new GoogleTranslator();
-
-  String text = "We serve society by strengthening the individual";
-
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      loadLanguage().then((value) {
-        print(_language);
-        // translate().then((_) {
-        //   setState(() {});
-        // });
-      });
-    });
-  }
-
-  Future<String> loadLanguage() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
-      _language = sharedPreferences.getString('language');
-    });
-
-    return _language;
-  }
-
-  Future<void> translate() async {
-    await translator.translate(text, to: _language).then((output) {
-      print(output.toString());
-      setState(() {
-        text = output.toString();
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [const Color(0xFFFF8F00), const Color(0xFFFFc107)],
+            ),
+          ),
+        ),
         title: Text(widget.title),
         centerTitle: true,
         actions: [
-          Container(
-            child: RaisedButton.icon(
-                color: Colors.blue,
-                highlightColor: Colors.transparent,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => TranslationSelection()));
-                },
-                icon: Icon(Icons.language),
-                label: Text('Languages')),
-          )
+          // Container(
+          //   child: RaisedButton.icon(
+          //       color: Colors.blue,
+          //       highlightColor: Colors.transparent,
+          //       onPressed: () {
+          //         Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //                 builder: (context) => TranslationSelection()));
+          //       },
+          //       icon: Icon(Icons.language),
+          //       label: Text('Languages')),
+          // )
         ],
+      ),
+      drawer: myDrawer(
+        context,
       ),
       body: Container(
         padding: EdgeInsets.all(8),
@@ -146,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                text,
+                'We serve the society',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -388,37 +369,40 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-              child: RaisedButton.icon(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LocalFeedback()));
+              },
+              textColor: Colors.white,
+              padding: const EdgeInsets.all(0.0),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: <Color>[Color(0xFFFF8F00), const Color(0xFFFFc107)],
                   ),
-                  elevation: 2,
-                  color: Colors.blue,
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LocalFeedback()));
-                  },
-                  icon: Icon(Icons.feedback),
-                  label: Text('Feedback')),
+                ),
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.feedback),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'Feedback',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-              child: RaisedButton.icon(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  elevation: 2,
-                  color: Colors.blue,
-                  onPressed: () {
-                    translate();
-                  },
-                  icon: Icon(Icons.feedback),
-                  label: Text('translate')),
-            )
           ],
         ),
       ),
