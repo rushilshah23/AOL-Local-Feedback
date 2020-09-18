@@ -1,4 +1,5 @@
 //added popup
+import 'package:AOL_localfeedback/statistics.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,6 +33,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   TextEditingController _suggestions = new TextEditingController();
   TextEditingController _ratings = new TextEditingController();
   TextEditingController _address = new TextEditingController();
+  TextEditingController waterexcbef = new TextEditingController();
+  TextEditingController waterexcaft = new TextEditingController();
+  TextEditingController cropprodbef = new TextEditingController();
+  TextEditingController cropprodaft = new TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -50,6 +55,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
       'contactNumber': _contactNumber.text,
       'email': _email.text,
       'address': _address.text,
+      'waterexcbef': waterexcbef.text,
+      'waterexcaft': waterexcaft.text,
+      'cropprodbef': cropprodbef.text,
+      'cropprodaft': cropprodaft.text,
       'feedback': _feedback.text,
       'suggestions': _suggestions.text,
       'timestamp': new DateFormat.yMd().add_jm().format(new DateTime.now()),
@@ -63,6 +72,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
     _feedback.clear();
     _suggestions.clear();
     _ratings.clear();
+    waterexcaft.clear();
+    waterexcbef.clear();
+    cropprodaft.clear();
+    cropprodbef.clear();
   }
 
   Future<void> _showMyDialog() async {
@@ -148,6 +161,13 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   String addressValidator(value) {
     if (value.isEmpty) {
       return 'Please enter a valid Address';
+    } else
+      return null;
+  }
+
+  String watercropValidator(value) {
+    if (value.isEmpty) {
+      return 'Please enter valid information';
     } else
       return null;
   }
@@ -266,6 +286,44 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         height: 20,
                       ),
                       fields(
+                        decorationText:
+                            "what was the ground water level before excavation?",
+                        controllername: waterexcbef,
+                        validateFunction: watercropValidator,
+                        compulsory: "*",
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                        decorationText:
+                            "What is the ground water level after excavation?",
+                        controllername: waterexcaft,
+                        validateFunction: watercropValidator,
+                        compulsory: "*",
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                        decorationText: "What was the crop production before?",
+                        controllername: cropprodbef,
+                        validateFunction: watercropValidator,
+                        compulsory: "*",
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
+                        decorationText: "What was the crop production after?",
+                        controllername: cropprodaft,
+                        validateFunction: watercropValidator,
+                        compulsory: "*",
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      fields(
                           decorationText: "Feedback",
                           controllername: _feedback,
                           validateFunction: feedbackValidator,
@@ -295,11 +353,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                               label: Text('Submit'),
                               color: Colors.blue,
                               colorBrightness: Brightness.light,
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_formKey.currentState.validate()) {
                                   try {
-                                    submitLocalFeedback();
-
+                                    await submitLocalFeedback();
                                     _name.clear();
                                     _contactNumber.clear();
                                     _email.clear();
@@ -307,16 +364,21 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                     _suggestions.clear();
                                     _ratings.clear();
                                     _address.clear();
+                                    waterexcbef.clear();
+                                    waterexcaft.clear();
+                                    cropprodbef.clear();
+                                    cropprodaft.clear();
                                     _showMyDialog();
-
-                                    // Scaffold.of(context).showSnackBar(SnackBar(
-                                    //     content: Text("Feedback recorded")));
                                   } catch (error) {
                                     Scaffold.of(context).showSnackBar(SnackBar(
                                         content: Text("Something went wrong")));
                                     return 'OOPS there was an error!';
                                   }
-                                  return null;
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              StatisticsPage()));
                                 } else {
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text(
