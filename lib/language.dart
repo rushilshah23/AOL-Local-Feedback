@@ -20,10 +20,14 @@ class Language with ChangeNotifier {
   checkLangSet() => _languageSelected;
 
   Future<String> getTranslation(String input) async {
+    print(_language);
     print('translating');
-    translation = (await _googleTranslator.translate(input)).toString();
+
+    translation =
+        (await _googleTranslator.translate(input, to: _language)).toString();
     print('translated');
 
+    notifyListeners();
     return translation;
   }
 }

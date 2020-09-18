@@ -5,36 +5,19 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-class MyHomePage extends StatefulWidget {
+class AboutIAHV extends StatefulWidget {
   final String title;
   // MyHomePage({Key key, this.title}) : super(key: key);
-  MyHomePage({this.title});
+  AboutIAHV({this.title});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _AboutIAHVState createState() => _AboutIAHVState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  String text1 = 'We serve the society by helping the needy people';
-  void initState() {
-    super.initState();
-    loadTextFields();
-  }
-
-  loadTextFields() async {
-    await Language().getTranslation(text1).then((value) {
-      setState(() {
-        text1 = value;
-      });
-    });
-
-    // return text1 =
-    //     (await _langVar.getTranslation('We serve the society')).toString();
-  }
-
+class _AboutIAHVState extends State<AboutIAHV> {
   @override
   Widget build(BuildContext context) {
-    Language _langVar = Provider.of<Language>(context);
+    // Language _langVar = Provider.of<Language>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                text1,
+                'We serve the society by helping the needy people',
                 // awaitloadTextFields(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,

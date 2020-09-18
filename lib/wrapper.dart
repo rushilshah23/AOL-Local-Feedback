@@ -1,6 +1,6 @@
 import 'package:AOL_localfeedback/homePage.dart';
 import 'package:AOL_localfeedback/language.dart';
-import 'package:AOL_localfeedback/main.dart';
+
 import 'package:AOL_localfeedback/translationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
