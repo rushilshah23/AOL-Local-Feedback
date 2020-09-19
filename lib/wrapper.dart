@@ -10,7 +10,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final _langSet = Provider.of<Language>(context);
 
-    if (_langSet.checkLangSet() == false) {
+    if (_langSet.languageSelected == false) {
       return TranslationSelection();
     } else
       return MyHomePage(title: 'Home');

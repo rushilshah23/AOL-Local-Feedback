@@ -4,6 +4,7 @@ import 'package:AOL_localfeedback/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;
@@ -16,13 +17,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String text1 = 'We serve the society by helping the needy people';
+  SharedPreferences sharedPreferences;
+
+  // Language _languageHome;
   void initState() {
+    // _languageHome = context.read<Language>();
     super.initState();
     loadTextFields();
   }
 
   loadTextFields() async {
-    await Language().getTranslation(text1).then((value) {
+    sharedPreferences = await SharedPreferences.getInstance();
+    await Language(sharedPreferences.getString('language'))
+        .getTranslation(text1)
+        .then((value) {
       setState(() {
         text1 = value;
       });
@@ -34,8 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Language _langVar = Provider.of<Language>(context);
-
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(

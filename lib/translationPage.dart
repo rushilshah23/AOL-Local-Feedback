@@ -79,19 +79,19 @@ class _TranslationSelectionState extends State<TranslationSelection> {
                         if (selected == 1) {
                           setState(() {
                             setLang.setLang('en');
-                            print(setLang.checkLangSet());
+                            print(setLang.languageSelected);
                             sharedPreferences.setString('language', 'en');
                           });
                         } else if (selected == 2) {
                           setState(() {
                             setLang.setLang('hi');
-                            print(setLang.checkLangSet());
+                            print(setLang.languageSelected);
                             sharedPreferences.setString('language', 'hi');
                           });
                         } else if (selected == 3) {
                           setState(() {
                             setLang.setLang('mr');
-                            print(setLang.checkLangSet());
+                            print(setLang.languageSelected);
                             print(setLang.getLang());
                             sharedPreferences.setString('language', 'mr');
                           });

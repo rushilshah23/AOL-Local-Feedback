@@ -6,7 +6,7 @@ class Language with ChangeNotifier {
   String _language;
   bool _languageSelected;
   String translation = '';
-  Language();
+  Language(this._language);
 
   GoogleTranslator _googleTranslator = GoogleTranslator();
 
@@ -17,14 +17,15 @@ class Language with ChangeNotifier {
     notifyListeners();
   }
 
-  checkLangSet() => _languageSelected;
+  get language => _language;
+  get languageSelected => _languageSelected;
 
   Future<String> getTranslation(String input) async {
     print(_language);
     print('translating');
 
     translation =
-        (await _googleTranslator.translate(input, to: _language)).toString();
+        (await _googleTranslator.translate(input, to: language)).toString();
     print('translated');
 
     notifyListeners();
