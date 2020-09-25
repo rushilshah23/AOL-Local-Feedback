@@ -9,6 +9,7 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _langSet = Provider.of<Language>(context);
+    print(_langSet.languageSelected);
 
     if (_langSet.languageSelected == false) {
       return TranslationSelection();

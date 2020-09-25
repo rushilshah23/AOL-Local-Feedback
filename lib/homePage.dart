@@ -1,5 +1,6 @@
 import 'package:AOL_localfeedback/feedback.dart';
 import 'package:AOL_localfeedback/language.dart';
+import 'package:AOL_localfeedback/pageTranslations/homeText.dart';
 import 'package:AOL_localfeedback/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +17,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String text1 = 'We serve the society by helping the needy people';
   SharedPreferences sharedPreferences;
+  String language;
 
   // Language _languageHome;
   void initState() {
@@ -28,13 +29,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   loadTextFields() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    await Language(sharedPreferences.getString('language'))
-        .getTranslation(text1)
-        .then((value) {
-      setState(() {
-        text1 = value;
-      });
-    });
+    language = sharedPreferences.getString('language');
+    if (language != 'en') {
+      for (var i = 0; i < homeText.length; i++) {
+        await Language(language).getTranslation(homeText[i]).then((value) {
+          setState(() {
+            homeText[i] = value;
+          });
+        });
+      }
+    }
 
     // return text1 =
     //     (await _langVar.getTranslation('We serve the society')).toString();
@@ -53,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        title: Text(widget.title),
+        title: Text(homeText[19]),
         centerTitle: true,
         actions: [
           // Container(
@@ -89,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                "ABOUT US",
+                homeText[0],
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
@@ -102,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                text1,
+                homeText[1],
                 // awaitloadTextFields(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -116,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                'Operating in 156 countries, The Art of Living is a non-profit, educational and humanitarian organization founded in 1981 by the world-renowned humanitarian and spiritual teacher - Gurudev Sri Sri Ravi Shankar. All our programs are guided by Gurudev’s philosophy: “Unless we have a stress-free mind and a violence-free society, we cannot achieve world peace.”',
+                homeText[2],
                 style: TextStyle(fontSize: 18, wordSpacing: 2),
               ),
             ),
@@ -126,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                'The Art of Living community is diverse and attracts people from all walks of life.',
+                homeText[3],
                 style: TextStyle(
                   fontSize: 18,
                 ),
@@ -154,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 15,
                       ),
                       Text(
-                        '39\nyears of service',
+                        homeText[4],
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -178,7 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 15,
                       ),
                       Text(
-                        '156\ncountries where we make\na difference',
+                        homeText[5],
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -202,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 15,
                       ),
                       Text(
-                        '10,000+\ncenters worldwide with \nweekly follow-up sessions',
+                        homeText[6],
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -226,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 15,
                       ),
                       Text(
-                        '450 million\nlives touched',
+                        homeText[7],
                         style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -242,7 +246,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Center(
               child: Text(
-                "Founder",
+                homeText[8],
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               ),
             ),
@@ -253,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Center(
               child: Text(
-                "Sri Sri Ravi Shankar Ji",
+                homeText[9],
                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 22),
               ),
             ),
@@ -262,7 +266,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Center(
               child: Text(
-                'Gurudev Sri Sri Ravi Shankar has united people of different races, traditions, economic and social status, and nationalities.This community, spanning 156 countries, has created a one-world spiritual family.',
+                homeText[10],
                 style: TextStyle(fontSize: 18),
               ),
             ),
@@ -271,7 +275,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Center(
               child: Text(
-                'Gurudev’s message is simple: “Love and wisdom can prevail over hatred and violence.” This message is not just a slogan, but through The Art of Living has been and continues to be translated into action and results.',
+                homeText[11],
                 style: TextStyle(fontSize: 18),
               ),
             ),
@@ -285,7 +289,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      'Contact Us',
+                      homeText[12],
                       style: TextStyle(color: Colors.white, fontSize: 40),
                     ),
                     SizedBox(
@@ -294,7 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'India Office',
+                        homeText[13],
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
@@ -304,7 +308,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Phone: +91 8067612345',
+                        homeText[14],
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
@@ -314,7 +318,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Fax: +91 8028432833',
+                        homeText[15],
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
@@ -324,7 +328,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Email: secretariat@artofliving.org',
+                        homeText[16],
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
@@ -334,7 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Address: Office of gurudev Sri Sri Ravi Shankar,The Art of living International centre',
+                        homeText[17],
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
@@ -372,7 +376,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: 10,
                     ),
                     Text(
-                      'Feedback',
+                      homeText[18],
                       style: TextStyle(fontSize: 20),
                     ),
                   ],

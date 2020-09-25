@@ -1,11 +1,14 @@
 //added popup
 
+import 'package:AOL_localfeedback/language.dart';
+import 'package:AOL_localfeedback/pageTranslations/feedbackText.dart';
 import 'package:AOL_localfeedback/statistics.dart';
 import 'package:AOL_localfeedback/widgets.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Feedback extends StatefulWidget {
   @override
@@ -44,11 +47,31 @@ class _LocalFeedbackState extends State<LocalFeedback> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool feedback;
+  SharedPreferences sharedPreferences;
+  String language;
 
-  @override
+  // Language _languageHome;
   void initState() {
+    // _languageHome = context.read<Language>();
     super.initState();
-    // clearControllers();
+    loadTextFields();
+  }
+
+  loadTextFields() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    language = sharedPreferences.getString('language');
+    if (language != 'en') {
+      for (var i = 0; i < feedbackText.length; i++) {
+        await Language(language).getTranslation(feedbackText[i]).then((value) {
+          setState(() {
+            feedbackText[i] = value;
+          });
+        });
+      }
+    }
+
+    // return text1 =
+    //     (await _langVar.getTranslation('We serve the society')).toString();
   }
 
   void submitLocalFeedback() {
@@ -98,7 +121,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
           title: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'ThankYou for the feedback !',
+              feedbackText[0],
               style: TextStyle(
                 letterSpacing: 2.0,
                 fontWeight: FontWeight.normal,
@@ -128,7 +151,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
               children: <Widget>[
                 Center(
                   child: Text(
-                    'Your Response has been submitted.',
+                    feedbackText[1],
                     style: TextStyle(
                         color: Colors.black87, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
@@ -144,7 +167,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
               hoverColor: Colors.red[400],
               color: Colors.black,
               child: Text(
-                'OK',
+                feedbackText[2],
                 style: TextStyle(color: Colors.amber),
               ),
               onPressed: () {
@@ -162,51 +185,51 @@ class _LocalFeedbackState extends State<LocalFeedback> {
 
   String nameValidator(value) {
     if (value.isEmpty) {
-      return 'Please enter a valid Name';
+      return feedbackText[3];
     } else
       return null;
   }
 
   String addressValidator(value) {
     if (value.isEmpty) {
-      return 'Please enter a valid Address';
+      return feedbackText[4];
     } else
       return null;
   }
 
   String watercropValidator(value) {
     if (value.isEmpty) {
-      return 'Please enter valid information';
+      return feedbackText[5];
     } else
       return null;
   }
 
   String feedbackValidator(value) {
     if (value.isEmpty) {
-      return 'Please give your Feedback!';
+      return feedbackText[6];
     } else
       return null;
   }
 
   String emailValidator(value) {
     if (value.isEmpty) {
-      return 'Please enter a Email ID';
+      return feedbackText[8];
     } else if (value.toString().contains('@') &&
         value.toString().contains('.')) {
       return null;
     } else
-      return 'Please enter a valid Email ID';
+      return feedbackText[9];
   }
 
   String contactValidator(value) {
     if (value.isEmpty) {
-      return 'Please enter a valid contact number';
+      return feedbackText[10];
     }
     final n = num.tryParse(value);
     if (n == null) {
-      return 'Enter a valid contact number';
+      return feedbackText[10];
     } else if (n > 9999999999 || n < 1000000000) {
-      return 'Enter a valid 10 digit number';
+      return feedbackText[11];
     } else
       return null;
   }
@@ -227,7 +250,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
       decoration: InputDecoration(
           labelText: decorationText + compulsory,
           border: OutlineInputBorder(),
-          hintText: 'Enter your $decorationText'),
+          hintText: '$feedbackText[12] $decorationText'),
       cursorWidth: 2,
       inputFormatters: numFormatter,
       keyboardType: keyboard,
@@ -248,7 +271,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
             ),
           ),
         ),
-        title: Text("Local Feedback"),
+        title: Text(feedbackText[13]),
         centerTitle: true,
       ),
       drawer: myDrawer(context),
@@ -266,7 +289,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         height: 20,
                       ),
                       fields(
-                          decorationText: "Name",
+                          decorationText: feedbackText[14],
                           controllername: _name,
                           validateFunction: nameValidator,
                           compulsory: "*"),
@@ -275,7 +298,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                       ),
                       fields(
                         keyboard: TextInputType.number,
-                        decorationText: "Contact Number",
+                        decorationText: feedbackText[15],
                         controllername: _contactNumber,
                         validateFunction: contactValidator,
                         numFormatter: [
@@ -288,7 +311,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         height: 20,
                       ),
                       fields(
-                          decorationText: "Email ID",
+                          decorationText: feedbackText[16],
                           controllername: _email,
                           validateFunction: emailValidator,
                           compulsory: "*"),
@@ -296,7 +319,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         height: 20,
                       ),
                       fields(
-                        decorationText: "Address",
+                        decorationText: feedbackText[17],
                         controllername: _address,
                         validateFunction: addressValidator,
                         compulsory: "*",
@@ -305,8 +328,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         height: 20,
                       ),
                       fields(
-                          decorationText:
-                              "What was the ground water level before excavation?",
+                          decorationText: feedbackText[18],
                           controllername: _groundWater1,
                           // validateFunction: feedbackValidator,
                           maxlen: 150,
@@ -316,8 +338,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         height: 20,
                       ),
                       fields(
-                          decorationText:
-                              "What is the ground water level after excavation?",
+                          decorationText: feedbackText[19],
                           controllername: _groundWater2,
                           // validateFunction: feedbackValidator,
                           maxlen: 150,
@@ -327,8 +348,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         height: 20,
                       ),
                       fields(
-                          decorationText:
-                              "What was the crop production before?",
+                          decorationText: feedbackText[20],
                           controllername: _crop1,
                           // validateFunction: feedbackValidator,
                           maxlen: 150,
@@ -338,7 +358,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         height: 20,
                       ),
                       fields(
-                          decorationText: "What was the crop production after?",
+                          decorationText: feedbackText[21],
                           controllername: _crop2,
                           // validateFunction: feedbackValidator,
                           maxlen: 150,
@@ -348,7 +368,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                         height: 20,
                       ),
                       fields(
-                          decorationText: "Feedback",
+                          decorationText: feedbackText[22],
                           controllername: _feedback,
                           validateFunction: feedbackValidator,
                           maxlen: 300,
@@ -360,7 +380,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                       fields(
                           controllername: _suggestions,
                           // validateFunction: textValidator,
-                          decorationText: "Suggestions",
+                          decorationText: feedbackText[23],
                           maxlen: 300,
                           maxlines: 5,
                           compulsory: ""),
@@ -393,7 +413,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                 } catch (error) {
                                   Scaffold.of(context).showSnackBar(SnackBar(
                                       content: Text("Something went wrong")));
-                                  return 'OOPS there was an error!';
+                                  return feedbackText[24];
                                 }
 
                                 Navigator.push(
@@ -405,11 +425,10 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                 // return null;
                               } else {
                                 Scaffold.of(context).showSnackBar(SnackBar(
-                                  content:
-                                      Text("Please fill the details properly"),
+                                  content: Text(feedbackText[25]),
                                   duration: Duration(seconds: 1),
                                 ));
-                                return 'Enter the fields properly';
+                                return feedbackText[26];
                               }
                             },
                             textColor: Colors.white,
@@ -439,7 +458,7 @@ class _LocalFeedbackState extends State<LocalFeedback> {
                                     width: 10,
                                   ),
                                   Text(
-                                    'Submit',
+                                    feedbackText[27],
                                     style: TextStyle(fontSize: 20),
                                   ),
                                 ],
