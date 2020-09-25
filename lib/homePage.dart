@@ -4,7 +4,6 @@ import 'package:AOL_localfeedback/pageTranslations/homeText.dart';
 import 'package:AOL_localfeedback/widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {

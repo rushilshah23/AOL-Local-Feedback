@@ -21,11 +21,12 @@ class Language with ChangeNotifier {
   get languageSelected => _languageSelected;
 
   Future<String> getTranslation(String input) async {
-    print(_language);
+    print(language);
     print('translating');
 
     translation =
-        (await _googleTranslator.translate(input, to: language)).toString();
+        (await _googleTranslator.translate(input, to: language ?? 'mr'))
+            .toString();
     print('translated');
 
     notifyListeners();
