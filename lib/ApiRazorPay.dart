@@ -26,7 +26,7 @@ class _ApiRazorPayState extends State<ApiRazorPay> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              RaisedButton(onPressed: openCheckout, child: Text('Open'))
+              RaisedButton(onPressed: openCheckout, child: Text('Donate Us'))
             ],
           ),
         ),

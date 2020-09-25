@@ -52,12 +52,12 @@ Drawer myDrawer(BuildContext context) {
             Navigator.pop(context);
           },
         ),
-        ListTile(
-            title: Text('Project'),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProjectPage()));
-            }),
+        // ListTile(
+        //     title: Text('Project'),
+        //     onTap: () {
+        //       Navigator.push(context,
+        //           MaterialPageRoute(builder: (context) => ProjectPage()));
+        //     }),
         ListTile(
           title: Text('Donation'),
           onTap: () {

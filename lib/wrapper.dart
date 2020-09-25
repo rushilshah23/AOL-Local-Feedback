@@ -1,9 +1,8 @@
 import 'package:AOL_localfeedback/homePage.dart';
-import 'package:AOL_localfeedback/language.dart';
 
 import 'package:AOL_localfeedback/translationPage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Wrapper extends StatefulWidget {
@@ -20,19 +19,24 @@ class _WrapperState extends State<Wrapper> {
     super.initState();
   }
 
-  loadLang() async {
+  Future<void> loadLang() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    lang = sharedPreferences.getString('language');
-    langSet = sharedPreferences.getBool('setLanguage') ?? false;
+    setState(() {
+      print("setting state");
+      lang = sharedPreferences.getString('language') ?? 'mr';
+      langSet = sharedPreferences.getBool('setLanguage') ?? false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final _langSet = Provider.of<Language>(context);
-    print(_langSet.languageSelected);
+    // final _langSet = Provider.of<Language>(context);
+    // print(_langSet.languageSelected);
 
     // if (_langSet.languageSelected == false) {
-    if (langSet == false) {
+    print(langSet);
+    print(lang);
+    if (langSet != true) {
       return TranslationSelection();
     } else
       return MyHomePage(title: 'Home');
