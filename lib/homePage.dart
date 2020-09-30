@@ -29,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
     loadTextFields();
     slides.add(
       new Slide(
-        title: 'We serve society by strengthening the individual',
+        title: homeText[1],
         maxLineTitle: 2,
         styleTitle: TextStyle(
             color: Colors.white70,
@@ -52,20 +52,13 @@ class _MyHomePageState extends State<MyHomePage> {
         widgetDescription: Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-            child: RichText(
-              text: new TextSpan(
-                // Note: Styles for TextSpans must be explicitly defined.
-                // Child text spans will inherit styles from parent
-                style: new TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
-                    fontStyle: FontStyle.italic
-                ),
-                children: <TextSpan>[
-                  new TextSpan(text: '    Operating in 156 countries, The Art of Living is a non-profit, educational and humanitarian organization founded in 1981 by the world-renowned humanitarian and spiritual teacher - Gurudev Sri Sri Ravi Shankar. All our programs are guided by Gurudev’s philosophy: '),
-                  new TextSpan(text: '“Unless we have a stress-free mind and a violence-free society, we cannot achieve world peace.”', style: new TextStyle(fontWeight: FontWeight.w800,letterSpacing: 2)),
-                ],
+            child: Text(
+              homeText[2],
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+                fontWeight: FontWeight.w300,
+                fontStyle: FontStyle.italic
               ),
             ),
           ),
@@ -80,14 +73,13 @@ class _MyHomePageState extends State<MyHomePage> {
     slides.add(
       new Slide(
           backgroundImage: 'assets/waterimg.jpg',
-          title:
-          "\nThe Art of Living community is diverse and attracts people from all walks of life.",
+          title: homeText[3],
           maxLineTitle: 4,
           styleTitle:
           TextStyle(color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.bold,fontStyle: FontStyle.italic),
           centerWidget: Container(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left: 8,right: 8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -105,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 15,
                           ),
                           Text(
-                            '39 years of service',
+                            homeText[4],
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
@@ -116,12 +108,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   SizedBox(height: 15),
                   Divider(
-                    height: 1,
+                    height: 2,
                     color: Colors.white,
                   ),
                   SizedBox(height: 15),
                   Container(
-                      height: 50,
+                      height: 60,
                       child: Row(
                         children: <Widget>[
                           Icon(
@@ -134,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Flexible(
                             child: Text(
-                              '156 countries where we make a difference',
+                              homeText[5],
                               style: TextStyle(
                                   fontSize: 18,
 
@@ -147,12 +139,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   SizedBox(height: 15),
                   Divider(
-                    height: 1,
+                    height: 2,
                     color: Colors.white,
                   ),
                   SizedBox(height: 15),
                   Container(
-                      height: 50,
+                      height: 60,
                       child: Row(
                         children: <Widget>[
                           Icon(
@@ -165,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Flexible(
                             child: Text(
-                              '10,000+ centers worldwide with weekly follow-up sessions',
+                              homeText[6],
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
@@ -177,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   SizedBox(height: 15),
                   Divider(
-                    height: 1,
+                    height: 2,
                     color: Colors.white,
                   ),
                   SizedBox(height: 15),
@@ -195,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           Flexible(
                             child: Text(
-                              '450 million lives touched',
+                              homeText[7],
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
@@ -218,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     slides.add(
       new Slide(
-          title: "FOUNDER",
+          title: homeText[8],
           centerWidget: Container(
               width: 190.0,
               height: 190.0,
@@ -234,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 children: [
                   Text(
-                    "Sri Sri Ravi Shankar Ji",
+                    homeText[9],
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 22,color: Color(0xffe2f3fb),fontStyle: FontStyle.italic),
                   ),
                   SizedBox(
@@ -244,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: const EdgeInsets.only(left: 5,right: 5),
                     child: Center(
                       child: Text(
-                        'Gurudev Sri Sri Ravi Shankar has united people of different races, traditions, economic and social status, and nationalities.',
+                        homeText[10],
                         style: TextStyle(fontSize: 18,color: Colors.white70),
                       ),
                     ),
@@ -252,26 +244,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                     padding: const EdgeInsets.only(left: 5,right: 5),
                     child: Center(
-//                  child: Text(
-//                    'Gurudev’s message is simple: “Love and wisdom can prevail over hatred and violence.” This message is not just a slogan, but through The Art of Living has been and continues to be translated into action and results.',
-//                    style: TextStyle(fontSize: 18,color: Colors.white70),
-//                  ),
-                      child: RichText(
-                        text: new TextSpan(
-                          // Note: Styles for TextSpans must be explicitly defined.
-                          // Child text spans will inherit styles from parent
-                          style: new TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w300,
-                              fontStyle: FontStyle.italic
-                          ),
-                          children: <TextSpan>[
-                            new TextSpan(text: 'Gurudev’s message is simple: '),
-                            new TextSpan(text: '“Love and wisdom can prevail over hatred and violence.”', style: new TextStyle(fontWeight: FontWeight.w800,letterSpacing: 2)),
-                            new TextSpan(text: 'This message is not just a slogan, but through The Art of Living has been and continues to be translated into action and results.')
-                          ],
-                        ),
+                      child: Text(
+                        homeText[11],
+                        style: TextStyle(fontSize: 18,color: Colors.white70,fontStyle: FontStyle.italic),
                       ),
                     ),
 
@@ -286,8 +261,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     slides.add(
       new Slide(
-          title: 'Contact Us',
-          centerWidget: Text('India Office',style: TextStyle(fontStyle: FontStyle.italic,color: Colors.white,fontSize: 20),),
+          title: homeText[12],
+          centerWidget: Text(homeText[13],style: TextStyle(fontStyle: FontStyle.italic,color: Colors.white,fontSize: 20),),
           widgetDescription: Padding(
             padding: const EdgeInsets.only(left: 10,right: 10),
             child: Column(
@@ -297,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Phone: +91-8067612345',
+                    homeText[14],
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
@@ -307,7 +282,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Fax: +91-8028432833',
+                    homeText[15],
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
@@ -317,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Email: secretariat@artofliving.org',
+                    homeText[16],
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
@@ -327,7 +302,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Address: Office of gurudev Sri Sri Ravi Shankar,The Art of living International centre',
+                    homeText[17],
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
@@ -347,7 +322,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                     icon: Icon(Icons.feedback),
-                    label: Text('Feedback',style: TextStyle(fontWeight: FontWeight.bold),)
+                    label: Text(homeText[18],style: TextStyle(fontWeight: FontWeight.bold),)
                 ),
               ],
             ),
