@@ -29,7 +29,8 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       setLanguage = sharedPreferences.getBool('setLanguage' ?? false);
       getSetLanguage = sharedPreferences.getString('language' ?? 'en');
-    });
+    }
+    );
 
     return setLanguage;
   }

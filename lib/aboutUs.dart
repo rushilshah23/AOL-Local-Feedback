@@ -1,9 +1,7 @@
 import 'package:AOL_localfeedback/feedback.dart';
-import 'package:AOL_localfeedback/language.dart';
 import 'package:AOL_localfeedback/widgets.dart';
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
 
 class AboutUs extends StatefulWidget {
   final String title;
@@ -121,96 +119,96 @@ class _AboutUsState extends State<AboutUs> {
                 children: <Widget>[
                   Container(
                       child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.favorite_border,
-                        size: 80,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        '39\nyears of service',
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ],
-                  )),
+                        children: <Widget>[
+                          Icon(
+                            Icons.favorite_border,
+                            size: 80,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            '39\nyears of service',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ],
+                      )),
                   Divider(
                     height: 1,
                     color: Colors.white,
                   ),
                   Container(
                       child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.language,
-                        size: 80,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        '156\ncountries where we make\na difference',
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ],
-                  )),
+                        children: <Widget>[
+                          Icon(
+                            Icons.language,
+                            size: 80,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            '156\ncountries where we make\na difference',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ],
+                      )),
                   Divider(
                     height: 1,
                     color: Colors.white,
                   ),
                   Container(
                       child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.location_on,
-                        size: 80,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        '10,000+\ncenters worldwide with \nweekly follow-up sessions',
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ],
-                  )),
+                        children: <Widget>[
+                          Icon(
+                            Icons.location_on,
+                            size: 80,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            '10,000+\ncenters worldwide with \nweekly follow-up sessions',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ],
+                      )),
                   Divider(
                     height: 1,
                     color: Colors.white,
                   ),
                   Container(
                       child: Row(
-                    children: <Widget>[
-                      Icon(
-                        Icons.people,
-                        size: 80,
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text(
-                        '450 million\nlives touched',
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ],
-                  )),
+                        children: <Widget>[
+                          Icon(
+                            Icons.people,
+                            size: 80,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            '450 million\nlives touched',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ],
+                      )),
                 ],
               ),
             ),

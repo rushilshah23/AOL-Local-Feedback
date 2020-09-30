@@ -37,7 +37,7 @@ dependencies:
   carousel_pro: ^1.0.0
   razorpay_flutter: ^1.2.2
   fluttertoast: ^7.0.2
-  
+  intro_slider: ^2.3.3
   
 
 
@@ -64,6 +64,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/waterimg.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
