@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './feedback.dart';
 import 'package:AOL_localfeedback/widgets.dart';
+import 'leaderBoard.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner:false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.amber,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Home Page'),
@@ -61,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: EdgeInsets.all(8),
         child: ListView(
           children: <Widget>[
+
             Container(
               child: Image.asset('assets/logo.jpg'),
               height: 120,
@@ -331,7 +331,7 @@ class _MyHomePageState extends State<MyHomePage> {
             RaisedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LocalFeedback()));
+                    MaterialPageRoute(builder: (context) => leaderBoard()));
               },
               textColor: Colors.white,
               padding: const EdgeInsets.all(0.0),
